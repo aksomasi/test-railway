@@ -3,18 +3,11 @@ dotenv.config();
 import express from 'express';
 import helmet from 'helmet';
 import path from 'path';
-import fs from 'fs';
 import { createServer } from 'http';
 import corsMiddleware from './middleware/cors';
 import routes from './routes';
 import { SocketServer } from './websocket/socketServer';
 import { setSocketInstance } from './websocket/events';
-
-// Ensure uploads directory exists
-const uploadsDir = path.join(__dirname, '../uploads');
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir, { recursive: true });
-}
 
 const app = express();
 const httpServer = createServer(app);
@@ -29,9 +22,7 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-      "script-src-attr": ["'unsafe-inline'"],
-      "style-src": ["'self'", "'unsafe-inline'"],
-      "style-src-attr": ["'unsafe-inline'"]
+      "script-src-attr": ["'unsafe-inline'"]
     }
   }
 }));
@@ -40,7 +31,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Static files
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+app.use('/uploads', express.static('uploads'));
 app.use(express.static(path.join(__dirname, '../../client/dist')));
 
 // Routes
@@ -48,17 +39,7 @@ app.use('/api', routes);
 
 // Health check
 app.get('/api/health', (req, res) => {
-  res.json({ 
-    status: 'OK', 
-    timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development',
-    port: PORT
-  });
-});
-
-// Root health check
-app.get('/health', (req, res) => {
-  res.json({ status: 'OK', service: 'Dive In Restaurant' });
+  res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
 // Error handling
@@ -70,13 +51,7 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 // Handle Angular routing - serve index.html for all non-API routes
 app.get('*', (req, res) => {
   if (!req.path.startsWith('/api') && !req.path.startsWith('/uploads')) {
-    const indexPath = path.join(__dirname, '../../client/dist/index.html');
-    res.sendFile(indexPath, (err) => {
-      if (err) {
-        console.error('Error serving index.html:', err);
-        res.status(500).json({ error: 'Failed to serve application' });
-      }
-    });
+    res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
   } else {
     res.status(404).json({ error: 'Route not found' });
   }
