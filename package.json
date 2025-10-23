@@ -3,18 +3,12 @@
   "version": "1.0.0",
   "description": "Restaurant ordering system with Angular frontend and Node.js backend",
   "scripts": {
-    "build": "npm run install:all && npm run build:client && npm run build:server",
-    "install:all": "npm install && cd client && npm install && cd ../server && npm install && cd ..",
-    "build:client": "cd client && npm run build -- --configuration=production",
-    "build:server": "cd server && npm run build",
+    "build": "cd client && npm install && npm run build -- --configuration=production && cd ../server && npm install && npm run build",
     "start": "cd server && npm start",
-    "migrate": "cd server && npm run migrate",
-    "postinstall": "npm run build"
+    "migrate": "cd server && npm run migrate"
   },
   "engines": {
     "node": ">=18.0.0",
     "npm": ">=8.0.0"
-  },
-  "dependencies": {},
-  "devDependencies": {}
+  }
 }

@@ -29,7 +29,9 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-      "script-src-attr": ["'unsafe-inline'"]
+      "script-src-attr": ["'unsafe-inline'"],
+      "style-src": ["'self'", "'unsafe-inline'"],
+      "style-src-attr": ["'unsafe-inline'"]
     }
   }
 }));
