@@ -1,6 +1,6 @@
 -- Create database
 CREATE DATABASE IF NOT EXISTS dive_thru;
-USE dive_in;
+USE dive_thru;
 
 -- Create categories table
 CREATE TABLE IF NOT EXISTS categories (
