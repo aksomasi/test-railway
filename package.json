@@ -5,6 +5,7 @@
   "scripts": {
     "build": "cd client && npm install && npm run build -- --configuration=production && cd ../server && npm install && npm run build",
     "build:client": "cd client && npm install && npm run build -- --configuration=production",
+    "build:server": "cd server && npm run build",
     "start": "cd server && npm start",
     "migrate": "cd server && npm run migrate"
   },
