@@ -4,6 +4,7 @@
   "description": "Restaurant ordering system with Angular frontend and Node.js backend",
   "scripts": {
     "build": "cd client && npm install && npm run build -- --configuration=production && cd ../server && npm install && npm run build",
+    "build:client": "cd client && npm install && npm run build -- --configuration=production",
     "start": "cd server && npm start",
     "migrate": "cd server && npm run migrate"
   },
