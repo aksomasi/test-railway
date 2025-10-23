@@ -189,15 +189,15 @@ export class MenuController {
           payloadAddons = req.body.addons;
         }
         
-        const payloadAddonIds = payloadAddons.map((id: any) => parseInt(id)).filter((id: number) => !isNaN(id));
+        const payloadAddonIds = payloadAddons.map((id: any) => parseInt(id)).filter(id => !isNaN(id));
         
         
         
         // Find addons to add (in payload but not in current data)
-        const addonsToAdd = payloadAddonIds.filter((addonId: number) => !currentAddonIds.includes(addonId));
+        const addonsToAdd = payloadAddonIds.filter(addonId => !currentAddonIds.includes(addonId));
         
         // Find addons to remove (in current data but not in payload)
-        const addonsToRemove = currentAddonIds.filter((addonId: number) => !payloadAddonIds.includes(addonId));
+        const addonsToRemove = currentAddonIds.filter(addonId => !payloadAddonIds.includes(addonId));
         
        
         

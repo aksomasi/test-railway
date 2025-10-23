@@ -3,7 +3,6 @@ import { CategoryController } from '../controllers/categoryController';
 import { MenuController } from '../controllers/menuController';
 import { AddonController } from '../controllers/addonController';
 import { OrderController } from '../controllers/orderController';
-import { SetupController } from '../controllers/setupController';
 import { upload } from '../middleware/upload';
 
 const router = Router();
@@ -13,7 +12,6 @@ const categoryController = new CategoryController();
 const menuController = new MenuController();
 const addonController = new AddonController();
 const orderController = new OrderController();
-const setupController = new SetupController();
 
 // Category routes
 router.get('/categories', categoryController.getAll.bind(categoryController));
@@ -38,8 +36,5 @@ router.get('/orders', orderController.getAll.bind(orderController));
 router.post('/orders', orderController.create.bind(orderController));
 router.put('/orders/:id', orderController.updateStatus.bind(orderController));
 router.get('/orders/:id', orderController.getById.bind(orderController));
-
-// Setup route
-router.post('/setup-database', setupController.setupDatabase.bind(setupController));
 
 export default router;
